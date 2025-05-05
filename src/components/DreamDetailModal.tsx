@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -97,7 +96,7 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
               </div>
             </div>
             
-            <div className="bg-black/20 p-4 rounded-lg overflow-y-auto max-h-[50vh]">
+            <div className="bg-black/20 p-4 rounded-xl overflow-y-auto max-h-[50vh]">
               <p className="text-white whitespace-pre-wrap break-words">
                 {dream.description}
               </p>

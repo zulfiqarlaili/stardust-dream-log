@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,6 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
   
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
-  // Reset form when modal opens
   useEffect(() => {
     if (isOpen) {
       setDescription(initialDescription || '');
@@ -41,10 +39,8 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
     }
   }, [isOpen, initialDescription]);
   
-  // Focus textarea when modal opens
   useEffect(() => {
     if (isOpen && textareaRef.current) {
-      // Short delay to ensure the modal is fully open
       setTimeout(() => {
         textareaRef.current?.focus();
       }, 100);
@@ -56,7 +52,6 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
     setDescription(value);
     setCharCount(value.length);
     
-    // Clear error when user types
     if (errors.description && value.length >= 50) {
       setErrors(prev => ({ ...prev, description: undefined }));
     }
@@ -73,7 +68,6 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
   };
   
   const handleSubmit = () => {
-    // Validate
     const newErrors: { description?: string } = {};
     
     if (description.length < 50) {
@@ -85,7 +79,6 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
       return;
     }
     
-    // Save dream
     try {
       addDream({
         description,
@@ -94,11 +87,9 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
         timestamp: new Date().toISOString(),
       });
       
-      // Show success feedback
       setShowConfetti(true);
       toast.success('Dream captured successfully!');
       
-      // Close modal after a delay to allow confetti to show
       setTimeout(() => {
         onDreamLogged();
         onClose();
@@ -117,19 +108,21 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
       <ConfettiEffect active={showConfetti} />
       
       <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-        <DialogContent className="sm:max-w-[600px] p-6 bg-card/90 backdrop-blur-md border border-dream-purple/20 shadow-xl text-white rounded-xl">
+        <DialogContent className="sm:max-w-[600px] p-6 bg-gradient-to-br from-black/80 via-[#1A1A2E]/90 to-[#16213E]/90 backdrop-blur-lg border border-dream-purple/30 shadow-2xl text-white rounded-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-center text-2xl text-white">
-              <Moon className="h-6 w-6 mr-2 text-dream-purple" strokeWidth={1.5} />
-              Enchant Your Dream
+              <Moon className="h-6 w-6 mr-2 text-dream-purple animate-pulse" strokeWidth={1.5} />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-dream-purple to-dream-pink">
+                Enchant Your Dream
+              </span>
             </DialogTitle>
           </DialogHeader>
           
           <div className="dream-form space-y-6 my-4">
-            <div>
+            <div className="w-full">
               <label 
                 htmlFor="dream-description" 
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium text-white/80 mb-1"
               >
                 Describe your dream
               </label>
@@ -137,22 +130,22 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
                 id="dream-description"
                 ref={textareaRef}
                 placeholder="What happened in your dream? How did it make you feel?"
-                className="min-h-[150px] w-full p-3 rounded-lg border border-dream-purple/30 focus:border-dream-purple/60 focus:ring-0 transition-shadow focus:outline-none bg-black/30 text-white"
+                className="min-h-[150px] w-full p-3 rounded-lg border border-dream-purple/40 focus:border-dream-purple/80 focus:ring-0 transition-all duration-300 focus:outline-none bg-black/30 text-white placeholder:text-white/50"
                 value={description}
                 onChange={handleDescriptionChange}
               />
               <div className="flex justify-between mt-1.5 text-xs">
-                <span className={`${errors.description ? 'text-red-500' : 'text-white/60'}`}>
+                <span className={`${errors.description ? 'text-red-400' : 'text-white/60'}`}>
                   {errors.description || `${charCount < 50 ? `At least ${50 - charCount} more characters needed` : 'Great description!'}`}
                 </span>
-                <span className={`${charCount > 2000 ? 'text-red-500' : 'text-white/60'}`}>
+                <span className={`${charCount > 2000 ? 'text-red-400' : 'text-white/60'}`}>
                   {charCount}/2000
                 </span>
               </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-white mb-2">
+              <label className="block text-sm font-medium text-white/80 mb-2">
                 How did you feel in this dream?
               </label>
               <div className="flex flex-wrap gap-2">
@@ -168,26 +161,26 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-white mb-2">
+              <label className="block text-sm font-medium text-white/80 mb-2">
                 How realistic was this dream?
               </label>
               <StarRating value={rating} onChange={setRating} />
             </div>
           </div>
           
-          <DialogFooter>
+          <DialogFooter className="flex gap-3 w-full px-0">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
-              className="border-dream-purple/30 text-white bg-transparent hover:bg-dream-purple/20"
+              className="w-full border-dream-purple/40 text-white bg-transparent hover:bg-dream-purple/20 hover:border-dream-purple/60 transition-all"
             >
               Cancel
             </Button>
             <Button
               type="button"
               onClick={handleSubmit}
-              className="bg-gradient-to-r from-dream-purple to-dream-pink text-white hover:shadow-md flex items-center space-x-1"
+              className="w-full bg-gradient-to-r from-dream-purple to-dream-pink text-white hover:shadow-lg hover:shadow-dream-purple/30 flex items-center justify-center space-x-1 transition-all duration-300 hover:scale-[1.02]"
               disabled={description.length < 50 || description.length > 2000}
             >
               <Sparkles className="h-4 w-4" />

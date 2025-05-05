@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Book, CloudMoon, Send, Sparkles } from 'lucide-react';
@@ -19,7 +18,6 @@ const HeroSection: React.FC = () => {
   const [selectedDream, setSelectedDream] = useState<Dream | null>(null);
   const [description, setDescription] = useState('');
   const [quickLogDream, setQuickLogDream] = useState<{description: string} | null>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     loadAllDreams();
@@ -46,21 +44,8 @@ const HeroSection: React.FC = () => {
       return;
     }
 
-    // Instead of directly saving, set the quickLogDream and open the modal
     setQuickLogDream({description});
     setIsModalOpen(true);
-  };
-
-  const scrollTimeline = (direction: 'left' | 'right') => {
-    if (!timelineRef.current) return;
-    
-    const scrollAmount = 300;
-    const currentScroll = timelineRef.current.scrollLeft;
-    
-    timelineRef.current.scrollTo({
-      left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
-      behavior: 'smooth'
-    });
   };
 
   return (
@@ -77,30 +62,32 @@ const HeroSection: React.FC = () => {
           Capture your dreams before they fade away. Your personal dream journal helps you remember and understand the mysterious world of your subconscious.
         </p>
         
-        <div className="pt-4 glass-card p-6 rounded-xl">
-          <Textarea
-            placeholder="Describe your dream... (min 50 characters)"
-            className="min-h-[100px] w-full p-3 rounded-lg border border-dream-purple/30 bg-black/30 text-white focus:border-dream-purple/60 focus:ring-0 transition-shadow focus:outline-none mb-4"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          
-          <div className="flex items-center justify-end gap-4">
-            <Button 
-              onClick={handleQuickLog}
-              disabled={description.trim().length < 50}
-              className="log-button bg-dream-purple hover:bg-dream-purple/90 text-white font-medium px-6 py-6 text-lg rounded-full shadow-md"
-            >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Capture Dream
-            </Button>
+        <div className="pt-4">
+          <div className="relative bg-black/20 backdrop-blur-sm border border-dream-purple/20 rounded-2xl p-1">
+            <Textarea
+              placeholder="Describe your dream... (min 50 characters)"
+              className="min-h-[100px] w-full p-4 rounded-xl border-none bg-transparent text-white focus:ring-0 focus:outline-none mb-4"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            
+            <div className="flex items-center justify-end gap-4 px-4 pb-4">
+              <Button 
+                onClick={handleQuickLog}
+                disabled={description.trim().length < 50}
+                className="log-button bg-dream-purple hover:bg-dream-purple/90 text-white font-medium px-6 py-6 text-lg rounded-full shadow-md"
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
+                Capture Dream
+              </Button>
+            </div>
           </div>
         </div>
       </div>
       
       {/* Recent Dreams Timeline */}
       <div className={cn(
-        "w-full max-w-5xl mx-auto mt-12 md:mt-16 transition-all duration-500",
+        "w-full max-w-2xl mx-auto mt-12 md:mt-16 transition-all duration-500",
         hasDreams ? "opacity-100" : "opacity-0 pointer-events-none h-0"
       )}>
         <div className="flex items-center justify-between mb-4">
@@ -114,46 +101,16 @@ const HeroSection: React.FC = () => {
           </Link>
         </div>
         
-        <div className="relative">
-          <div 
-            className="overflow-x-auto pb-4 hide-scrollbar" 
-            ref={timelineRef}
-            style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
-          >
-            <div className="timeline pl-4 min-w-max">
-              {dreams.map(dream => (
-                <div key={dream.id} className="timeline-item">
-                  <div 
-                    className="dream-card p-4 rounded-xl cursor-pointer hover:bg-card/80 transition-all"
-                    onClick={() => openDetailModal(dream)}
-                  >
-                    <DreamCard dream={dream} />
-                  </div>
-                </div>
-              ))}
+        <div className="space-y-4 w-full">
+          {dreams.map(dream => (
+            <div 
+              key={dream.id}
+              className="dream-card p-4 rounded-xl cursor-pointer hover:bg-card/80 transition-all w-full"
+              onClick={() => openDetailModal(dream)}
+            >
+              <DreamCard dream={dream} />
             </div>
-          </div>
-          
-          {dreams.length > 3 && (
-            <div className="flex items-center justify-between mt-4">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => scrollTimeline('left')}
-                className="border-dream-purple/30 text-white bg-transparent hover:bg-dream-purple/20"
-              >
-                Previous
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => scrollTimeline('right')}
-                className="border-dream-purple/30 text-white bg-transparent hover:bg-dream-purple/20"
-              >
-                Next
-              </Button>
-            </div>
-          )}
+          ))}
         </div>
       </div>
       

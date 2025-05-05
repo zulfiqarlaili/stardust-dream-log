@@ -1,4 +1,3 @@
-
 import { EmotionType } from '@/components/EmotionTag';
 
 export interface Dream {

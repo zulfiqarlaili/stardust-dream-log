@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Dream } from '@/utils/dreamStorage';
 import { EmotionType } from '@/components/EmotionTag';
