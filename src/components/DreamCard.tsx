@@ -31,7 +31,7 @@ const DreamCard: React.FC<DreamCardProps> = ({ dream }) => {
   });
 
   return (
-    <div className="w-full max-w-lg">
+    <div className="w-full">
       <div className="flex justify-between items-start mb-2">
         <div>
           <div className="text-sm text-white font-medium">{formattedDate}</div>
