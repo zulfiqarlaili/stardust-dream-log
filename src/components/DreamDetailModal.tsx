@@ -5,7 +5,7 @@ import { Moon, Star, Trash2, AlertTriangle } from 'lucide-react';
 import { EmotionType } from '@/components/EmotionTag';
 import type { Dream } from '@/utils/dreamStorage';
 import { deleteDream } from '@/utils/dreamStorage';
-import { 
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -35,11 +35,11 @@ const EMOTION_EMOJIS: Record<EmotionType, string> = {
   nostalgic: '🥹',
 };
 
-const DreamDetailModal: React.FC<DreamDetailModalProps> = ({ 
-  isOpen, 
-  onClose, 
+const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
+  isOpen,
+  onClose,
   dream,
-  onDreamDeleted = () => {} 
+  onDreamDeleted = () => { }
 }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
@@ -51,7 +51,7 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
     day: 'numeric',
     year: 'numeric',
   });
-  
+
   const formattedTime = new Date(dream.timestamp).toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
@@ -68,21 +68,23 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-        <DialogContent className="sm:max-w-[600px] p-6 bg-card/90 backdrop-blur-md border border-dream-purple/20 shadow-xl text-white rounded-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-[600px] p-6 bg-card/90 backdrop-blur-md border border-dream-purple/20 shadow-xl text-white max-h-[90vh]"
+          style={{ borderRadius: '0.75rem' }}
+        >
           <DialogHeader>
             <DialogTitle className="flex items-center justify-center text-2xl text-white">
               <Moon className="h-6 w-6 mr-2 text-dream-purple" strokeWidth={1.5} />
               Dream Details
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-6 my-4">
             <div className="flex justify-between items-center">
               <div className="text-sm">
                 <div className="font-medium text-white">{formattedDate}</div>
                 <div className="text-white/60">{formattedTime}</div>
               </div>
-              
+
               <div className="flex items-center">
                 <span className="text-sm mr-2 text-white/80">Realism:</span>
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -95,13 +97,13 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
                 ))}
               </div>
             </div>
-            
+
             <div className="bg-black/20 p-4 rounded-xl overflow-y-auto max-h-[50vh]">
               <p className="text-white whitespace-pre-wrap break-words">
                 {dream.description}
               </p>
             </div>
-            
+
             {dream.emotions.length > 0 && (
               <div>
                 <h3 className="text-white text-sm mb-2">Emotions:</h3>
@@ -119,13 +121,13 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
               </div>
             )}
           </div>
-          
+
           <DialogFooter className="mt-4 flex flex-col sm:flex-row gap-2 justify-between sm:justify-end w-full">
             <Button
               type="button"
               variant="destructive"
               onClick={() => setIsDeleteDialogOpen(true)}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto rounded-xl"
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Delete Dream
@@ -133,7 +135,7 @@ const DreamDetailModal: React.FC<DreamDetailModalProps> = ({
             <Button
               type="button"
               onClick={onClose}
-              className="bg-dream-purple text-white hover:bg-dream-purple/90 w-full sm:w-auto"
+              className="bg-dream-purple text-white hover:bg-dream-purple/90 w-full sm:w-auto rounded-xl"
             >
               Close
             </Button>

@@ -89,11 +89,12 @@ const DreamModal: React.FC<DreamModalProps> = ({ isOpen, onClose, onDreamLogged,
       
       setShowConfetti(true);
       toast.success('Dream captured successfully!');
+      setDescription('');
       
       setTimeout(() => {
         onDreamLogged();
         onClose();
-      }, 1500);
+      }, 500);
     } catch (error) {
       uiToast({
         title: "Error",
