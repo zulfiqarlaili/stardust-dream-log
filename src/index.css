@@ -1,0 +1,116 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 250 25% 10%;
+    --foreground: 250 20% 90%;
+
+    --card: 250 25% 12%;
+    --card-foreground: 250 20% 90%;
+
+    --popover: 250 25% 12%;
+    --popover-foreground: 250 20% 90%;
+
+    --primary: 260 71% 65%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 290 100% 81%;
+    --secondary-foreground: 250 20% 20%;
+
+    --muted: 250 25% 18%;
+    --muted-foreground: 250 20% 60%;
+
+    --accent: 260 71% 30%;
+    --accent-foreground: 250 20% 90%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 250 25% 18%;
+    --input: 250 25% 18%;
+    --ring: 260 71% 65%;
+
+    --sidebar-background: 250 25% 15%;
+    --sidebar-foreground: 250 20% 90%;
+    --sidebar-primary: 260 71% 65%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 250 25% 18%;
+    --sidebar-accent-foreground: 250 20% 90%;
+    --sidebar-border: 250 25% 18%;
+    --sidebar-ring: 260 71% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .star-rating button {
+    @apply transition-transform duration-300 focus:outline-none focus:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dream-purple;
+  }
+
+  .star-rating button:hover {
+    @apply transform scale-110;
+  }
+
+  .emotion-tag input:checked + label {
+    @apply bg-dream-purple text-white font-semibold shadow-lg scale-105;
+  }
+  
+  .dream-card {
+    @apply backdrop-blur-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-dream-purple/20 border border-dream-purple/20 bg-card/60;
+  }
+  
+  .dream-form textarea {
+    @apply focus:shadow-[0_0_15px_rgba(138,111,223,0.4)];
+  }
+  
+  .log-button {
+    @apply relative overflow-hidden transition-all duration-300 hover:shadow-glow before:absolute before:inset-0 before:bg-gradient-to-r before:from-dream-purple before:to-dream-pink before:opacity-0 before:transition-opacity hover:before:opacity-40 before:rounded-full before:scale-0 hover:before:scale-150 before:duration-500;
+  }
+  
+  .shadow-glow {
+    @apply shadow-[0_0_25px_rgba(138,111,223,0.6)];
+  }
+  
+  .timeline {
+    @apply relative pl-8 my-4 before:absolute before:content-[''] before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-dream-purple/70 before:to-dream-pink/70 before:rounded-full;
+  }
+  
+  .timeline-item {
+    @apply relative mb-8 last:mb-0;
+  }
+  
+  .timeline-item:before {
+    @apply absolute content-[''] w-4 h-4 bg-dream-purple rounded-full -left-[1.65rem] top-3 border-2 border-background z-10;
+  }
+  
+  .glass-card {
+    @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-xl;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
