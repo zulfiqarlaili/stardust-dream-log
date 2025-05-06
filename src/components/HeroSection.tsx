@@ -62,25 +62,25 @@ const HeroSection: React.FC = () => {
           Capture your dreams before they fade away. Your personal dream journal helps you remember and understand the mysterious world of your subconscious.
         </p>
         
-        <div className="pt-4">
-          <div className="relative bg-black/20 backdrop-blur-sm border border-dream-purple/20 rounded-2xl p-1">
+        <div className="pt-4 w-full">
+          <div className="relative bg-black/20 backdrop-blur-sm border border-dream-purple/20 rounded-2xl p-1 w-full">
             <Textarea
               placeholder="Describe your dream... (min 50 characters)"
-              className="min-h-[100px] w-full p-4 rounded-xl border-none bg-transparent text-white focus:ring-0 focus:outline-none mb-4"
+              className="min-h-[225px] w-full p-4 rounded-xl border-none bg-transparent text-white focus:ring-0 focus:outline-none"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            
-            <div className="flex items-center justify-end gap-4 px-4 pb-4">
-              <Button 
-                onClick={handleQuickLog}
-                disabled={description.trim().length < 50}
-                className="log-button bg-dream-purple hover:bg-dream-purple/90 text-white font-medium px-6 py-6 text-lg rounded-full shadow-md"
-              >
-                <Sparkles className="mr-2 h-5 w-5" />
-                Capture Dream
-              </Button>
-            </div>
+          </div>
+          
+          <div className="flex items-center justify-end mt-4">
+            <Button 
+              onClick={handleQuickLog}
+              disabled={description.trim().length < 50}
+              className="log-button bg-dream-purple hover:bg-dream-purple/90 text-white font-medium px-6 py-6 text-lg rounded-full shadow-md w-full"
+            >
+              <Sparkles className="mr-2 h-5 w-5" />
+              Capture Dream
+            </Button>
           </div>
         </div>
       </div>

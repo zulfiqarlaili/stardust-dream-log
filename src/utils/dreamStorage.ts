@@ -78,7 +78,10 @@ export const exportToCSV = (): string => {
 // Download CSV file
 export const downloadCSV = (): void => {
   const csvContent = exportToCSV();
-  if (!csvContent) return;
+  if (!csvContent) {
+    alert('No dreams to export');
+    return;
+  }
   
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -91,5 +94,10 @@ export const downloadCSV = (): void => {
   
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
+  
+  // Cleanup
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, 100);
 };
